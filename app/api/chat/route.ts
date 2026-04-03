@@ -6,11 +6,22 @@ import { routeIntent } from '@/lib/workflow';
 
 export async function POST(request: NextRequest) {
   try {
-    const { message, userData = {}, history = [], currentStep = 'sandbox' } = (await request.json()) as {
+    const {
+      message,
+      userData = {},
+      history = [],
+      currentStep = 'sandbox',
+      model,
+      systemPromptOverride,
+      apiKey
+    } = (await request.json()) as {
       message: string;
       userData: Record<string, string>;
       history: Array<{ role: string; content: string }>;
       currentStep?: string;
+      model?: string;
+      systemPromptOverride?: string;
+      apiKey?: string;
     };
 
     if (!message || message.trim().length === 0) {
@@ -32,10 +43,17 @@ export async function POST(request: NextRequest) {
       `Workflow: ${JSON.stringify(agent.workflow)}`,
       `User data: ${JSON.stringify(userData)}`,
       `Chat history: ${JSON.stringify(history.slice(-20))}`,
+      `System prompt override: ${systemPromptOverride || 'none'}`,
       'Return strict JSON keys: reply, action, next_step, data.'
     ].join('\n');
 
-    const output = await generateAgentResponse({ userMessage: message, composedPrompt: prompt });
+    const output = await generateAgentResponse({
+      userMessage: message,
+      composedPrompt: prompt,
+      model,
+      apiKey
+    });
+
     addLog('ai', `Sandbox chat output (${intent}): ${output.reply}`);
     return NextResponse.json(output);
   } catch (error) {

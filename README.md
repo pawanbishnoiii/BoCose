@@ -57,3 +57,14 @@ Then verify:
 ## Merge conflict note
 
 If GitHub shows "This branch has conflicts", resolve by syncing your feature branch with `main` (see `docs/DEPLOY_AND_CONFLICT_FIX.md`).
+
+
+## Advanced agent controls (ElevenLabs-style, text only)
+
+Sandbox panel now supports:
+- Runtime model input
+- Runtime OpenRouter key input (for testing without server env)
+- System prompt override
+- Local persistence of settings + messages in IndexedDB
+
+For production Telegram automation, set `OPENROUTER_API_KEY` in Vercel env.

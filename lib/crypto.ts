@@ -1,8 +1,8 @@
 import crypto from 'crypto';
-import { getServerConfig } from './config';
+import { getTokenSecret } from './config';
 
 function getKey() {
-  const { tokenSecret } = getServerConfig();
+  const tokenSecret = getTokenSecret();
   return crypto.createHash('sha256').update(tokenSecret).digest();
 }
 

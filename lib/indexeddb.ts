@@ -52,3 +52,12 @@ export async function seedAgents(agents: AgentConfig[]) {
     await saveRecord('agents', agent);
   }
 }
+
+export async function saveMessage(role: 'user' | 'assistant', content: string) {
+  await saveRecord('messages', {
+    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    role,
+    content,
+    createdAt: Date.now()
+  });
+}

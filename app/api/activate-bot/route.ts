@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerConfig } from '@/lib/config';
+import { getPublicAppUrl } from '@/lib/config';
 import { encryptToken } from '@/lib/crypto';
 import { addLog } from '@/lib/logger';
 import { saveBotToken } from '@/lib/server-store';
 import { setupWebhook, validateBotToken } from '@/lib/telegram';
 
 function resolveBaseUrl(request: NextRequest) {
-  const { publicAppUrl } = getServerConfig();
+  const publicAppUrl = getPublicAppUrl();
   if (publicAppUrl) {
     return publicAppUrl;
   }

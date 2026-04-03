@@ -40,3 +40,8 @@ git push --force-with-lease
 - Activate bot from UI using token input.
 - Ensure Telegram webhook is set to:
   - `https://bocose.vercel.app/api/webhook?botId=<BOT_ID>`
+
+
+## 5) If UI shows "Missing required env: OPENROUTER_API_KEY"
+That means your Vercel environment variable is missing for server-side routes (`/api/chat`, `/api/webhook`).
+Add `OPENROUTER_API_KEY` in Vercel project settings and redeploy.
