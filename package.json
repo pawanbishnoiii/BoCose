@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": "20.x"
   },
   "dependencies": {
     "framer-motion": "^12.10.0",

@@ -1,4 +1,4 @@
-const requiredServerEnv = ['OPENROUTER_API_KEY', 'PUBLIC_APP_URL', 'BOCOSE_TOKEN_SECRET'] as const;
+const requiredServerEnv = ['OPENROUTER_API_KEY', 'BOCOSE_TOKEN_SECRET'] as const;
 
 type RequiredServerEnv = (typeof requiredServerEnv)[number];
 
@@ -13,7 +13,7 @@ function readEnv(name: RequiredServerEnv): string {
 export function getServerConfig() {
   return {
     openRouterApiKey: readEnv('OPENROUTER_API_KEY'),
-    publicAppUrl: readEnv('PUBLIC_APP_URL').replace(/\/$/, ''),
-    tokenSecret: readEnv('BOCOSE_TOKEN_SECRET')
+    tokenSecret: readEnv('BOCOSE_TOKEN_SECRET'),
+    publicAppUrl: process.env.PUBLIC_APP_URL?.replace(/\/$/, '')
   };
 }

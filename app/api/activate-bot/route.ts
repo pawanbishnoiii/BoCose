@@ -5,6 +5,21 @@ import { addLog } from '@/lib/logger';
 import { saveBotToken } from '@/lib/server-store';
 import { setupWebhook, validateBotToken } from '@/lib/telegram';
 
+function resolveBaseUrl(request: NextRequest) {
+  const { publicAppUrl } = getServerConfig();
+  if (publicAppUrl) {
+    return publicAppUrl;
+  }
+
+  const proto = request.headers.get('x-forwarded-proto') || 'https';
+  const host = request.headers.get('x-forwarded-host') || request.headers.get('host');
+  if (!host) {
+    throw new Error('Unable to resolve host for webhook URL. Set PUBLIC_APP_URL env.');
+  }
+
+  return `${proto}://${host}`;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as { token?: string };
@@ -18,11 +33,11 @@ export async function POST(request: NextRequest) {
     const encrypted = encryptToken(token);
     saveBotToken(botId, encrypted);
 
-    const { publicAppUrl } = getServerConfig();
-    const webhookUrl = `${publicAppUrl}/api/webhook?botId=${encodeURIComponent(botId)}`;
+    const baseUrl = resolveBaseUrl(request);
+    const webhookUrl = `${baseUrl}/api/webhook?botId=${encodeURIComponent(botId)}`;
     await setupWebhook(token, webhookUrl);
 
-    addLog('system', `Bot ${botId} activated`);
+    addLog('system', `Bot ${botId} activated at ${baseUrl}`);
     return NextResponse.json({ ok: true, botId, webhookUrl });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Activation failed';
