@@ -1,4 +1,4 @@
-import { getOpenRouterApiKey } from './config';
+import { getOpenRouterApiKey, getOpenRouterModel } from './config';
 import { OpenRouterResponse } from './types';
 
 type GenerateInput = {
@@ -9,7 +9,7 @@ type GenerateInput = {
 };
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const DEFAULT_MODEL = 'qwen/qwen3.6-plus:free';
+const DEFAULT_MODEL = getOpenRouterModel();
 
 export async function generateAgentResponse({
   userMessage,

@@ -17,3 +17,7 @@ export function getPublicAppUrl() {
 export function getOpenRouterApiKey() {
   return readEnv('OPENROUTER_API_KEY', false);
 }
+
+export function getOpenRouterModel() {
+  return readEnv('OPENROUTER_MODEL', false) || 'qwen/qwen3.6-plus:free';
+}
