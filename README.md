@@ -44,3 +44,16 @@ A Telegram-first, text-only AI Chat Agent Builder built with Next.js App Router 
 3. Keep `vercel.json` in repo with framework set to `nextjs`.
 4. Configure env vars (`OPENROUTER_API_KEY`, `BOCOSE_TOKEN_SECRET`, optional `PUBLIC_APP_URL`).
 5. Deploy and activate bot token from UI.
+
+
+## Quick production URL setup
+
+For your current project, set:
+- `PUBLIC_APP_URL=https://bocose.vercel.app`
+
+Then verify:
+- `https://bocose.vercel.app/api/health`
+
+## Merge conflict note
+
+If GitHub shows "This branch has conflicts", resolve by syncing your feature branch with `main` (see `docs/DEPLOY_AND_CONFLICT_FIX.md`).
